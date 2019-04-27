@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 app.use('/todo', todoRoutes);
 
-mongoose.connect('mongodb://admin:admin1@ds161471.mlab.com:61471/feathers-todos')
+mongoose.connect('mongodb://admin:admin1@ds161471.mlab.com:61471/feathers-todos', { useNewUrlParser: true })
     .then(() => {
         app.listen(port, hostname, () => {
             console.log(`Server running at http://${hostname}:${port}/`);
