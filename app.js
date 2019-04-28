@@ -10,7 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-//CORS fix
+//CORS fix middleware
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 app.use('/todo', todoRoutes);
 
-mongoose.connect('mongodb://admin:admin1@ds161471.mlab.com:61471/feathers-todos', { useNewUrlParser: true })
+mongoose.connect('mongodb://admin:admin1@ds147926.mlab.com:47926/mock-db', { useNewUrlParser: true })
     .then(() => {
         app.listen(port, hostname, () => {
             console.log(`Server running at http://${hostname}:${port}/`);
