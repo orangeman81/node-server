@@ -47,7 +47,7 @@ exports.login = (req, res, next) => {
         });
     }
 
-    return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+    return passport.authenticate('local', { session: true }, (err, passportUser, info) => {
         if (err) {
             return next(err);
         }
@@ -55,7 +55,9 @@ exports.login = (req, res, next) => {
         if (passportUser) {
             const user = passportUser;
             user.token = passportUser.generateJWT();
-
+            req.session.isLoggedIn = true;
+            req.session.userId = user._id;
+            req.session.save();
             return res.json({ user: user.toAuthJSON() });
         }
 
@@ -74,4 +76,14 @@ exports.user = (req, res, next) => {
 
             return res.json({ user: user.toAuthJSON() });
         });
+}
+
+exports.logout = (req, res, next) => {
+    req.session.destroy(err => {
+        if (!err) {
+            res.json({ message: "user logged out" });
+        } else {
+            res.json({ message: err });
+        }
+    });
 }

@@ -14,6 +14,7 @@ exports.findAll = (req, res, next) => {
 exports.findOne = (req, res, next) => {
     const id = req.params.id;
     Todo.findById(id)
+        .populate('userId', 'email')
         .then(results => {
             res.status(200).json({
                 message: "Todo fetched",
@@ -27,7 +28,8 @@ exports.create = (req, res, next) => {
     const payload = req.body;
     const todo = new Todo({
         title: payload.title,
-        description: payload.description
+        description: payload.description,
+        userId: req.session.userId
     })
 
     todo.save()
