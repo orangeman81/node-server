@@ -24,7 +24,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useCreateIndex: true, useNewUrlParser: true });
 require('./config/passport');
 //Middlewares
 app.use(cors());

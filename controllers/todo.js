@@ -24,6 +24,21 @@ exports.findOne = (req, res, next) => {
         .catch(err => console.log(err));
 }
 
+exports.search = (req, res, next) => {
+    const term = req.params.query;
+    const query = {
+        $text: { $search: term }
+    };
+    Todo.find(query)
+        .then(results => {
+            res.status(200).json({
+                message: "Todo fetched",
+                data: results
+            })
+        })
+        .catch(err => console.log(err));
+}
+
 exports.create = (req, res, next) => {
     const payload = req.body;
     const todo = new Todo({
