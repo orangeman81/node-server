@@ -31,7 +31,12 @@ app.use(cors());
 //routes
 app.use('/', Routes);
 
-app.listen(port, hostname, () => {
+const server = app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+const io = require('./socket').init(server);
+io.on('connection', socket => {
+    console.log('Client connected');
 });
 
